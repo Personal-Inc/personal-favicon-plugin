@@ -3,9 +3,11 @@ class Favicon
 	attr_accessor :@main_url
 
 		# Declaring initialize method
-		def self.get(url)
+		def initialize(url)
 			@main_url = url
+			@main_url
 		end
+
 
 		#def create(url)
 			#@main_url = params[:url]
