@@ -1,6 +1,6 @@
 class Favicon
 
-	attr_accessor :@main_url
+	#attr_accessor :@main_url
 
 		# Declaring initialize method
 		def self.initialize(url)
