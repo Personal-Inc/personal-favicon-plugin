@@ -3,7 +3,7 @@ class Favicon
 	#attr_accessor :@main_url
 
 		# Declaring initialize method
-		def self.initialize(url)
+		def self.get(url)
 			@main_url = url
 			@main_url
 		end
