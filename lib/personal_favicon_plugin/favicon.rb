@@ -1,7 +1,7 @@
 class Favicon
 
 		# Declaring initialize method
-		def self.get(url)
+		def self.initialize(url)
 			@main_url = url
 		end
 
@@ -150,5 +150,5 @@ class Favicon
 			 #puts get_favicon
 			 get_favicon
 		end
-		
+
 end
