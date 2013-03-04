@@ -1,7 +1,3 @@
-require 'net/http'
-require 'net/https'
-require 'uri'
-
 class Favicon
 
 	#attr_accessor :@main_url
