@@ -7,11 +7,11 @@ require "personal_favicon_plugin/version"
 Gem::Specification.new do |s|
   s.name        = "personal_favicon_plugin"
   s.version     = PersonalFaviconPlugin::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
+  s.authors     = ["TODO: Seyed Morteza Montazeri"]
+  s.email       = ["TODO: shayan@personal.com"]
   s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of PersonalFaviconPlugin."
-  s.description = "TODO: Description of PersonalFaviconPlugin."
+  s.summary     = "TODO: PersonalFaviconPlugin."
+  s.description = "TODO: Retreiving favicon of a website"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
