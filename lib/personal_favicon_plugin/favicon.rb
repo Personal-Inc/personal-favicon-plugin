@@ -1,5 +1,6 @@
 require 'net/http'
 require 'net/https'
+require 'open-uri'
 require 'uri'
 
 class Favicon
@@ -222,9 +223,43 @@ class Favicon
 
 		def self.show_favicon
 
-			 get_favicon
+			contentfavicon = get_favicon
+			uri_content_favicon = URI.parse(contentfavicon)
+			exp1 = contentfavicon.split(base_url.chomp("/"))
+			
+
+			if(uri_content_favicon.scheme == "https")
+				exp = contentfavicon.split("https://")
+				exp2 = exp[1].split("/")
+
+				Net::HTTP.start(exp2[0], :use_ssl => true, :verify_mode => OpenSSL::SSL::VERIFY_NONE) { |http|
+				resp = http.get(exp1[1])
+				File.open("favicon.ico","wb") { |file|
+					file.write(resp.body)
+					}
+				}
+
+
+			else
+				exp = contentfavicon.split("http://")
+				exp2 = exp[1].split("/")
+
+				Net::HTTP.start(exp2[0]) { |http|
+				resp = http.get(exp1[1])
+				File.open("favicon.ico","wb") { |file|
+					file.write(resp.body)
+					}
+				}
+			end
+
+			
+
+			 #get_favicon
 
 		end
 
 end
+
+Favicon.get("https://www.discover.com/home-loans/?ICMPGN=HDR_CS_HELP_DHL_TXT_HP")
+Favicon.show_favicon
 
