@@ -1,6 +1,5 @@
 require 'net/http'
 require 'net/https'
-require 'open-uri'
 require 'uri'
 
 class Favicon
