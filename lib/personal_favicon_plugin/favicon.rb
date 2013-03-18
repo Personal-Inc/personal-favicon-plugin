@@ -235,8 +235,8 @@ class Favicon
 
 			#send_data data,:filename => "favicon.ico", :type => "image/ico", :disposition => "inline"
 
-			#contentfavicon = show_favicon
-			data = open("#{get_favicon}","rb") {|io| io.read}
+			contentfavicon = show_favicon
+			data = open("#{contentfavicon}","rb") {|io| io.read}
 			data
 
 		
