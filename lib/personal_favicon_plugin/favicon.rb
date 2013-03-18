@@ -251,8 +251,8 @@ class Favicon
 
 				Net::HTTP.start(exp2[0], :use_ssl => true, :verify_mode => OpenSSL::SSL::VERIFY_NONE) { |http|
 				resp = http.get(exp1[1])
-				data = open("#{resp}","rb") { |file|
-					file.read(resp.body)
+				data = open("#{resp.body}","rb") { |file|
+					file.read
 					}
 				}
 
@@ -263,8 +263,8 @@ class Favicon
 
 				Net::HTTP.start(exp2[0]) { |http|
 				resp = http.get(exp1[1])
-				data = open("#{resp}","rb") { |file|
-					file.read(resp.body)
+				data = open("#{resp.body}","rb") { |file|
+					file.read
 					}
 				}
 			end
