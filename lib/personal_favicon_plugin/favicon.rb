@@ -236,39 +236,10 @@ class Favicon
 			#send_data data,:filename => "favicon.ico", :type => "image/ico", :disposition => "inline"
 
 			#contentfavicon = show_favicon
-			#data = open("#{get_favicon}","rb")
-			#data
+			data = open("#{get_favicon}","rb") {|io| io.read}
+			data
 
-			contentfavicon = get_favicon
-			uri_content_favicon = URI.parse(contentfavicon)
-			exp1 = contentfavicon.split(base_url.chomp("/"))
-			
-
-			if(uri_content_favicon.scheme == "https")
-				exp = contentfavicon.split("https://")
-				exp2 = exp[1].split("/")
-
-				Net::HTTP.start(exp2[0], :use_ssl => true, :verify_mode => OpenSSL::SSL::VERIFY_NONE) { |http|
-				resp = http.get(exp1[1])
-				File.open("favicon.ico","rb") { |file|
-					file.read(resp.body)
-					}
-				}
-
-
-			else
-				exp = contentfavicon.split("http://")
-				exp2 = exp[1].split("/")
-
-				Net::HTTP.start(exp2[0]) { |http|
-				resp = http.get(exp1[1])
-				File.open("favicon.ico","rb") { |file|
-					file.read(resp.body)
-					}
-				}
-			end
-
-
+		
 
 		end
 
