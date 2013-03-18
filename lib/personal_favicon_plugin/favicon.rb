@@ -267,17 +267,18 @@ class Favicon
 				puts "exp[1] = #{exp[1]} \n"
 				puts "exp2 = #{exp2}\n"
 				puts "exp1[1] = #{exp1[1]}\n"
+				@data = ""
 
 
 				Net::HTTP.start(exp2[0]) { |http|
 				resp = http.get(exp1[1])
-			    return resp.body 
+			    @data = @data + resp.body
 				#File.open(data,"wb") { |file|
 				#	file.write(resp.body)
 				#	}
 				}
 
-				
+				@data
 
 				
 
@@ -293,7 +294,8 @@ class Favicon
 		    
 end
 
-
+Favicon.get("http://www.google.com/")
+Favicon.process_favicon_image
 		
 
 
