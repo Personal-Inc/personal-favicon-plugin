@@ -1,6 +1,7 @@
 require 'net/http'
 require 'net/https'
 require 'uri'
+require 'open-uri'
 
 class Favicon
 
@@ -16,7 +17,7 @@ class Favicon
 
 		private 
 
-		def self.open(url)
+		def self.open_url(url)
 			begin
 
 				uri = URI.parse(url)
@@ -156,7 +157,7 @@ class Favicon
 
 		def self.parse_html
 
-			page_content = open(base_url)
+			page_content = open_url(base_url)
 			
 			if page_content != nil
 
@@ -220,45 +221,25 @@ class Favicon
 
 		# returning favicon.ico 
 
+		private
+
 		def self.show_favicon
 
-			contentfavicon = get_favicon
-			uri_content_favicon = URI.parse(contentfavicon)
-			exp1 = contentfavicon.split(base_url.chomp("/"))
-			
-
-			if(uri_content_favicon.scheme == "https")
-				exp = contentfavicon.split("https://")
-				exp2 = exp[1].split("/")
-
-				Net::HTTP.start(exp2[0], :use_ssl => true, :verify_mode => OpenSSL::SSL::VERIFY_NONE) { |http|
-				resp = http.get(exp1[1])
-				File.open("favicon.ico","wb") { |file|
-					file.write(resp.body)
-					}
-				}
-
-
-			else
-				exp = contentfavicon.split("http://")
-				exp2 = exp[1].split("/")
-
-				Net::HTTP.start(exp2[0]) { |http|
-				resp = http.get(exp1[1])
-				File.open("favicon.ico","wb") { |file|
-					file.write(resp.body)
-					}
-				}
-			end
-
-			
-
-			 #get_favicon
+			get_favicon
 
 		end
 
-end
+		# processing the image
 
-Favicon.get("https://www.discover.com/home-loans/?ICMPGN=HDR_CS_HELP_DHL_TXT_HP")
-Favicon.show_favicon
+		def self.process_favicon_image
+
+			#send_data data,:filename => "favicon.ico", :type => "image/ico", :disposition => "inline"
+
+			contentfavicon = show_favicon
+			data = open("#{get_favicon}","rb")
+			data
+		end
+end
+		
+
 
