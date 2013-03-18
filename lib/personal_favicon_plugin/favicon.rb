@@ -272,13 +272,13 @@ class Favicon
 
 				Net::HTTP.start(exp2[0]) { |http|
 				resp = http.get(exp1[1])
-			    @data = @data + resp.body
+			    @data = resp.body
 				#File.open(data,"wb") { |file|
 				#	file.write(resp.body)
 				#	}
 				}
 
-				@data
+			    return @data
 
 				
 
