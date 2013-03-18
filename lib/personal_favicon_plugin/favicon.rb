@@ -257,22 +257,27 @@ class Favicon
 				#	}
 				}
 
-				@data
+				
 
 
 			else
 				exp = contentfavicon.split("http://")
+				puts "exp = #{exp} \n"
 				exp2 = exp[1].split("/")
+				puts "exp[1] = #{exp[1]} \n"
+				puts "exp2 = #{exp2}\n"
+				puts "exp1[1] = #{exp1[1]}\n"
+
 
 				Net::HTTP.start(exp2[0]) { |http|
 				resp = http.get(exp1[1])
-				@data = resp.body
+			    return resp.body 
 				#File.open(data,"wb") { |file|
 				#	file.write(resp.body)
 				#	}
 				}
 
-				@data
+				
 
 				
 
@@ -288,8 +293,6 @@ class Favicon
 		    
 end
 
-#Favicon.get("http://www.google.com/")
-#Favicon.process_favicon_image
 
 		
 
