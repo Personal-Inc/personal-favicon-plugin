@@ -251,12 +251,13 @@ class Favicon
 
 				Net::HTTP.start(exp2[0], :use_ssl => true, :verify_mode => OpenSSL::SSL::VERIFY_NONE) { |http|
 				resp = http.get(exp1[1])
-				data = open("#{resp.body}","rb") { |file|
-					file.read
-					}
+				@data =   resp.body
+				#File.open(data,"wb") { |file|
+				#	file.write(resp.body)
+				#	}
 				}
 
-				data
+				@data
 
 
 			else
@@ -265,12 +266,16 @@ class Favicon
 
 				Net::HTTP.start(exp2[0]) { |http|
 				resp = http.get(exp1[1])
-				data = open("#{resp.body}","rb") { |file|
-					file.read
-					}
+				@data = resp.body
+				#File.open(data,"wb") { |file|
+				#	file.write(resp.body)
+				#	}
 				}
 
-				data
+				@data
+
+				
+
 			end
 
 
@@ -282,6 +287,9 @@ class Favicon
 
 		    
 end
+
+#Favicon.get("http://www.google.com/")
+#Favicon.process_favicon_image
 
 		
 
