@@ -237,7 +237,7 @@ class Favicon
 
 			contentfavicon = URI.parse(show_favicon)
 			data = open("#{contentfavicon}","rb").read
-			data
+			data.to_s(2)
 
 		
 
