@@ -256,6 +256,8 @@ class Favicon
 					}
 				}
 
+				data
+
 
 			else
 				exp = contentfavicon.split("http://")
@@ -267,6 +269,8 @@ class Favicon
 					file.read
 					}
 				}
+
+				data
 			end
 
 
