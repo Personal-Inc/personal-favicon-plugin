@@ -2,6 +2,7 @@ require 'net/http'
 require 'net/https'
 require 'uri'
 require 'open-uri'
+require 'faraday'
 
 class Favicon
 
@@ -11,6 +12,17 @@ class Favicon
 
 			@main_url = url
 			@main_url
+		end
+
+
+		# Using Faraday for connection
+
+		def self.connection(fara_url)
+			conn = Faraday.new(:url => fara_url) do |faraday|
+				faraday.request :url_encoded
+				faraday.response :logger
+				faraday.adapter Faraday.default_adapter
+			end
 		end
 
 		# Get the page content from a URL
@@ -240,49 +252,67 @@ class Favicon
 			#data
 
 
-			contentfavicon = get_favicon
-			uri_content_favicon = URI.parse(contentfavicon)
+			  contentfavicon = show_favicon
+			# uri_content_favicon = URI.parse(contentfavicon)
+			# exp1 = contentfavicon.split(base_url.chomp("/"))
+
+			conn = Faraday.new(:url => contentfavicon) do |faraday|
+				faraday.request :url_encoded
+				faraday.response :logger
+				faraday.adapter Faraday.default_adapter
+			end
+
+			exp = contentfavicon.split("http://")
 			exp1 = contentfavicon.split(base_url.chomp("/"))
+			exp2 = exp[1].split("/")
+
+
+			response = conn.get "#{exp1[1]}"
+			data = response.body
+			return data
+
+
+
 			
 
-			if(uri_content_favicon.scheme == "https")
-				exp = contentfavicon.split("https://")
-				exp2 = exp[1].split("/")
+			# if(uri_content_favicon.scheme == "https")
+			# 	exp = contentfavicon.split("https://")
+			# 	exp2 = exp[1].split("/")
 
-				Net::HTTP.start(exp2[0], :use_ssl => true, :verify_mode => OpenSSL::SSL::VERIFY_NONE) { |http|
-				resp = http.get(exp1[1])
-				@data =   resp.body
+			# 	Net::HTTP.start(exp2[0], :use_ssl => true, :verify_mode => OpenSSL::SSL::VERIFY_NONE) { |http|
+			# 	resp = http.get(exp1[1])
+			# 	@data =   resp.body
 				#File.open(data,"wb") { |file|
 				#	file.write(resp.body)
 				#	}
-				}
+				#}
 
 				
 
 
-			else
-				exp = contentfavicon.split("http://")
-				puts "exp = #{exp} \n"
-				exp2 = exp[1].split("/")
-				puts "exp[1] = #{exp[1]} \n"
-				puts "exp2 = #{exp2}\n"
-				puts "exp1[1] = #{exp1[1]}\n"
-				@data = ""
+			# else
+			# 	exp = contentfavicon.split("http://")
+			# 	puts "exp = #{exp} \n"
+			# 	exp2 = exp[1].split("/")
+			# 	puts "exp[1] = #{exp[1]} \n"
+			# 	puts "exp2 = #{exp2}\n"
+			# 	puts "exp1[1] = #{exp1[1]}\n"
+			# 	@data = ""
 
 
-				Net::HTTP.start(exp2[0]) { |http|
-				resp = http.get(exp1[1])
-			    @@data = resp.body
-				#File.open(data,"wb") { |file|
-				#	file.write(resp.body)
-				#	}
-				}
+			# 	Net::HTTP.start(exp2[0]) { |http|
+			# 	resp = http.get(exp1[1])
+			#     @@data = resp.body
+			# 	#File.open(data,"wb") { |file|
+			# 	#	file.write(resp.body)
+			# 	#	}
+			# 	}
 
-			    return @@data
+			#     return @@data
 
 				
 
-			end
+			# end
 
 
 		
