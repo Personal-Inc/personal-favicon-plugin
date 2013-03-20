@@ -256,18 +256,15 @@ class Favicon
 			# uri_content_favicon = URI.parse(contentfavicon)
 			# exp1 = contentfavicon.split(base_url.chomp("/"))
 
-			conn = Faraday.new(:url => contentfavicon) do |faraday|
-				faraday.request :url_encoded
-				faraday.response :logger
-				faraday.adapter Faraday.default_adapter
-			end
+			conn = connection(contentfavicon)
 
 			exp = contentfavicon.split("http://")
 			exp1 = contentfavicon.split(base_url.chomp("/"))
 			exp2 = exp[1].split("/")
 
 
-			response = conn.get "#{exp1[1]}"
+			#response = conn.get "#{exp1[1]}"
+			response = conn.get "#{show_favicon}"
 			return response.body
 			
 
