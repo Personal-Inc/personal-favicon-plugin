@@ -268,8 +268,8 @@ class Favicon
 
 
 			response = conn.get "#{exp1[1]}"
-			data = response.body
-			return data
+			return response.body
+			
 
 
 
