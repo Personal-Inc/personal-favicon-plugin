@@ -272,13 +272,13 @@ class Favicon
 
 				Net::HTTP.start(exp2[0]) { |http|
 				resp = http.get(exp1[1])
-			    @data = resp.body
+			    @@data = resp.body
 				#File.open(data,"wb") { |file|
 				#	file.write(resp.body)
 				#	}
 				}
 
-			    return @data
+			    return @@data
 
 				
 
@@ -294,8 +294,8 @@ class Favicon
 		    
 end
 
-Favicon.get("http://www.google.com/")
-Favicon.process_favicon_image
+#Favicon.get("http://www.google.com/")
+#Favicon.process_favicon_image
 		
 
 
