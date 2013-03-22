@@ -34,23 +34,12 @@ class Favicon
 		def self.open_url(url)
 			begin
 
-				uri = URI.parse(url)
-
-				if uri.scheme == "https"
-					http = Net::HTTP.new(uri.host, uri.port)
-					http.use_ssl = true
-					http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-					request = Net::HTTP::Get.new(uri.request_uri)
-
-					response = http.request(request)
-					response.body
-				else
-					Net::HTTP.get(URI.parse(url))
-				end		
+				conn = connection(url)
+				response = conn.get "#{url}"
+				return response.body		
 
 			rescue SocketError => se
-				puts "Got socket error: #{se}"
+				return "Got socket error: #{se}"
 			end
 
 		end
@@ -63,23 +52,12 @@ class Favicon
 		def self.open_img_url(image_url)
 
 			begin
-
-				image_url_https = URI.parse(image_url)
-
-				if image_url_https.scheme == "https"
-					http = Net::HTTP.new(image_url_https.host, image_url_https.port)
-					http.use_ssl = true
-					http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-					image_url_response = http.request(Net::HTTP::Get.new(image_url_https.request_uri))
-					image_url_response
-				else
-					image_url_response = Net::HTTP.get_response(URI.parse(image_url))
+				conn = connection(image_url)
+				image_url_response = conn.get "#{image_url}"
+				return image_url_response
 		
-					image_url_response
-				end
 			rescue SocketError => se
-				puts "Got socket error: #{se}"
+			 	return "Got socket error: #{se}"
 			end
 
 		end
@@ -90,7 +68,7 @@ class Favicon
 
 		def self.response_code(img_url_respon)
 
-			code  = Integer(img_url_respon.code)
+			code  = Integer(img_url_respon.status)
 			code
 
 		end
@@ -140,7 +118,7 @@ class Favicon
 		def self.base_url
 
 			address = @main_url
-			base_uri = URI.parse(address)
+			base_uri = connection(address)
 			return "#{base_uri.scheme}://#{base_uri.host}"
 
 		end
@@ -198,7 +176,7 @@ class Favicon
 					return nil
 				end
 			else
-				puts "Check the socket error"
+				return "Check the socket error"
 			end
 			 
 		end
@@ -226,7 +204,7 @@ class Favicon
 						default_favicon
 					end
 				else
-					puts "Check the socket error"
+					return "Check the socket error"
 				end
 				
 			end
@@ -247,74 +225,12 @@ class Favicon
 
 		def self.process_favicon_image
 
-			#send_data data,:filename => "favicon.ico", :type => "image/ico", :disposition => "inline"
-
-			#contentfavicon = show_favicon
-			#data = open("#{contentfavicon}","rb").read
-			#data
-
-
-			  contentfavicon = show_favicon
-			# uri_content_favicon = URI.parse(contentfavicon)
-			# exp1 = contentfavicon.split(base_url.chomp("/"))
+			contentfavicon = show_favicon
 
 			conn = connection(contentfavicon)
-
-			#exp = contentfavicon.split("https://")
-			#exp1 = contentfavicon.split(base_url.chomp("/"))
-			#exp2 = exp[1].split("/")
-
-
-			#response = conn.get "#{exp1[1]}"
 			response = conn.get "#{show_favicon}"
-			return response.body
-			
+			return response.body				
 
-
-
-			
-
-			# if(uri_content_favicon.scheme == "https")
-			# 	exp = contentfavicon.split("https://")
-			# 	exp2 = exp[1].split("/")
-
-			# 	Net::HTTP.start(exp2[0], :use_ssl => true, :verify_mode => OpenSSL::SSL::VERIFY_NONE) { |http|
-			# 	resp = http.get(exp1[1])
-			# 	@data =   resp.body
-				#File.open(data,"wb") { |file|
-				#	file.write(resp.body)
-				#	}
-				#}
-
-				
-
-
-			# else
-			# 	exp = contentfavicon.split("http://")
-			# 	puts "exp = #{exp} \n"
-			# 	exp2 = exp[1].split("/")
-			# 	puts "exp[1] = #{exp[1]} \n"
-			# 	puts "exp2 = #{exp2}\n"
-			# 	puts "exp1[1] = #{exp1[1]}\n"
-			# 	@data = ""
-
-
-			# 	Net::HTTP.start(exp2[0]) { |http|
-			# 	resp = http.get(exp1[1])
-			#     @@data = resp.body
-			# 	#File.open(data,"wb") { |file|
-			# 	#	file.write(resp.body)
-			# 	#	}
-			# 	}
-
-			#     return @@data
-
-				
-
-			# end
-
-
-		
 
 		end
 
