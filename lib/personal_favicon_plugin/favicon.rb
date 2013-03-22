@@ -232,7 +232,14 @@ class Favicon
 			get(url)
 			contentfavicon = show_favicon
 			fav_image = url_body(contentfavicon)
-			return fav_image						
+
+			if fav_image.nil?
+				return fav_image
+			else
+				personal_favicon_binary = File.read("personal_favicon.ico")
+				return personal_favicon_binary
+			end 
+							
 
 		end
 
@@ -242,5 +249,5 @@ class Favicon
 end
 
 		
-
+#Favicon.favicon_image_binary("http://my.gwu.edu/")
 
