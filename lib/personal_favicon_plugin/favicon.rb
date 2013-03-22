@@ -18,7 +18,9 @@ class Favicon
 		# Using Faraday for connection
 
 		def self.connection(fara_url)
-			conn = Faraday.new(:url => fara_url) do |faraday|
+			conn_opt = {:url => fara_url, :ssl => { :verify_mode => OpenSSL::SSL::VERIFY_NONE}}
+			conn = Faraday.new (conn_opt) do |faraday|
+				#faraday.request :multi_part
 				faraday.request :url_encoded
 				faraday.response :logger
 				faraday.adapter Faraday.default_adapter
@@ -258,14 +260,14 @@ class Favicon
 
 			conn = connection(contentfavicon)
 
-			exp = contentfavicon.split("http://")
-			exp1 = contentfavicon.split(base_url.chomp("/"))
-			exp2 = exp[1].split("/")
+			#exp = contentfavicon.split("http://")
+			#exp1 = contentfavicon.split(base_url.chomp("/"))
+			#exp2 = exp[1].split("/")
 
 
 			#response = conn.get "#{exp1[1]}"
 			response = conn.get "#{show_favicon}"
-			return response.body
+			puts response.body
 			
 
 
@@ -321,7 +323,7 @@ class Favicon
 		    
 end
 
-#Favicon.get("http://www.google.com/")
+#Favicon.get("https://www.discover.com/") ##not working for https
 #Favicon.process_favicon_image
 		
 
