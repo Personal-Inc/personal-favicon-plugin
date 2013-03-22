@@ -260,7 +260,7 @@ class Favicon
 
 			conn = connection(contentfavicon)
 
-			#exp = contentfavicon.split("http://")
+			#exp = contentfavicon.split("https://")
 			#exp1 = contentfavicon.split(base_url.chomp("/"))
 			#exp2 = exp[1].split("/")
 
