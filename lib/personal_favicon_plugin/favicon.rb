@@ -236,7 +236,8 @@ class Favicon
 			if fav_image.nil?
 				return fav_image
 			else
-				personal_favicon_binary = File.read("personal_favicon.ico")
+				#personal_favicon_binary = File.read("personal_favicon.ico")
+				personal_favicon_binary = url_body("https://www.personal.com/favicon.ico")
 				return personal_favicon_binary
 			end 
 							
@@ -248,6 +249,5 @@ class Favicon
 		    
 end
 
-		
-#Favicon.favicon_image_binary("http://my.gwu.edu/")
+
 
