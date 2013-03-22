@@ -8,6 +8,8 @@ class Favicon
 
 		# Declaring get method
 
+		private
+
 		def self.get(url)
 
 			@main_url = url
@@ -17,13 +19,33 @@ class Favicon
 
 		# Using Faraday for connection
 
+		private
+
 		def self.connection(fara_url)
-			conn_opt = {:url => fara_url, :ssl => { :verify_mode => OpenSSL::SSL::VERIFY_NONE}}
-			conn = Faraday.new (conn_opt) do |faraday|
-				#faraday.request :multi_part
-				faraday.request :url_encoded
-				faraday.response :logger
-				faraday.adapter Faraday.default_adapter
+			
+				conn_opt = {:url => fara_url, :ssl => { :verify_mode => OpenSSL::SSL::VERIFY_NONE},:max_redirects => 2}
+				conn = Faraday.new (conn_opt) do |faraday|
+					faraday.request :url_encoded
+					faraday.response :logger
+					faraday.adapter Faraday.default_adapter
+				end
+			
+		end
+
+		# Get URL response
+
+		private 
+
+		def self.url_response(url)
+			begin
+				conn = connection(url)
+				url_resp = conn.get "#{url}"
+				return url_resp
+		
+			rescue SocketError => se
+		#rescue Errno::ETIMEDOUT
+			 	return "Got socket error: #{se}"
+			 	#puts "Got TIMEDOUT Error"
 			end
 		end
 
@@ -31,11 +53,10 @@ class Favicon
 
 		private 
 
-		def self.open_url(url)
+		def self.url_body(url)
 			begin
 
-				conn = connection(url)
-				response = conn.get "#{url}"
+				response = url_response(url)
 				return response.body		
 
 			rescue SocketError => se
@@ -43,24 +64,7 @@ class Favicon
 			end
 
 		end
-
-		# Send a GET request to the target and returns the HTTP response
-		# as a Net::HTTPResponse object for image url
-
-		private
-
-		def self.open_img_url(image_url)
-
-			begin
-				conn = connection(image_url)
-				image_url_response = conn.get "#{image_url}"
-				return image_url_response
 		
-			rescue SocketError => se
-			 	return "Got socket error: #{se}"
-			end
-
-		end
 
 		# Get the response code for the favicon url
 
@@ -149,7 +153,7 @@ class Favicon
 
 		def self.parse_html
 
-			page_content = open_url(base_url)
+			page_content = url_body(base_url)
 			
 			if page_content != nil
 
@@ -192,7 +196,7 @@ class Favicon
 				parse_html
 			else
 
-				imgur = open_img_url(base_favicon)
+				imgur = url_response(base_favicon)
 
 				if imgur != nil
 					imgurcd = response_code(imgur)
@@ -223,14 +227,12 @@ class Favicon
 
 		# processing the image
 
-		def self.process_favicon_image
+		def self.favicon_image_binary(url)
 
+			get(url)
 			contentfavicon = show_favicon
-
-			conn = connection(contentfavicon)
-			response = conn.get "#{show_favicon}"
-			return response.body				
-
+			fav_image = url_body(contentfavicon)
+			puts fav_image						
 
 		end
 
@@ -239,8 +241,6 @@ class Favicon
 		    
 end
 
-#Favicon.get("https://www.discover.com/") ##not working for https
-#Favicon.process_favicon_image
 		
 
 
