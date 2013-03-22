@@ -233,21 +233,22 @@ class Favicon
 			contentfavicon = show_favicon
 			fav_image = url_body(contentfavicon)
 
-			if fav_image.nil?
-				return fav_image
-			else
-				#personal_favicon_binary = File.read("personal_favicon.ico")
+			if fav_image.empty?
 				personal_favicon_binary = url_body("https://www.personal.com/favicon.ico")
 				return personal_favicon_binary
+				
+			else
+				return fav_image
 			end 
 							
 
 		end
 
 
-
 		    
 end
+
+
 
 
 
