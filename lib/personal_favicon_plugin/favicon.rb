@@ -267,7 +267,7 @@ class Favicon
 
 			#response = conn.get "#{exp1[1]}"
 			response = conn.get "#{show_favicon}"
-			puts response.body
+			return response.body
 			
 
 
