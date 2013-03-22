@@ -232,7 +232,7 @@ class Favicon
 			get(url)
 			contentfavicon = show_favicon
 			fav_image = url_body(contentfavicon)
-			puts fav_image						
+			return fav_image						
 
 		end
 
