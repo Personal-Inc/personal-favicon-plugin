@@ -1,7 +1,6 @@
 require 'net/http'
 require 'net/https'
 require 'uri'
-require 'open-uri'
 require 'faraday'
 
 class Favicon
@@ -13,7 +12,24 @@ class Favicon
 		def self.get(url)
 
 			@main_url = url
-			@main_url
+		    return @main_url
+
+		end
+
+
+		# check if the input is URI?
+
+		private 
+
+		def self.uri?(string)
+
+  			uri = URI.parse(string)
+  			%w( http https ).include?(uri.scheme)
+			rescue URI::BadURIError
+  				false
+			rescue URI::InvalidURIError
+ 				false
+
 		end
 
 
@@ -43,9 +59,9 @@ class Favicon
 				return url_resp
 		
 			rescue SocketError => se
-		#rescue Errno::ETIMEDOUT
+
 			 	return "Got socket error: #{se}"
-			 	#puts "Got TIMEDOUT Error"
+			 	
 			end
 		end
 
@@ -73,7 +89,7 @@ class Favicon
 		def self.response_code(img_url_respon)
 
 			code  = Integer(img_url_respon.status)
-			code
+			return code
 
 		end
 
@@ -85,9 +101,9 @@ class Favicon
 		def self.base_favicon
 
 			if base_url.end_with? "/"
-				base_url.chomp("/") + "/favicon.ico"
+				return base_url.chomp("/") + "/favicon.ico"
 			else
-				base_url + "/favicon.ico"
+				return base_url + "/favicon.ico"
 			end
 
 		end
@@ -111,9 +127,10 @@ class Favicon
 			rescue Errno::ECONNRESET => e
 				value = false
 			end
-			value
+			return value
 
 		end
+
 
 		# parsing the url to get the base url 
 
@@ -195,22 +212,7 @@ class Favicon
 			if check_favicon == true
 				parse_html
 			else
-
-				imgur = url_response(base_favicon)
-
-				if imgur != nil
-					imgurcd = response_code(imgur)
-
-					if(imgurcd >= 200 && imgurcd <= 400)
-						base_favicon
-					else
-						default_favicon = "default favicon?!!"
-						default_favicon
-					end
-				else
-					return "Check the socket error"
-				end
-				
+				base_favicon					
 			end
 
 		end
@@ -229,17 +231,21 @@ class Favicon
 
 		def self.favicon_image_binary(url)
 
-			get(url)
-			contentfavicon = show_favicon
-			fav_image = url_body(contentfavicon)
+			if uri?("#{get(url)}") != false
+				contentfavicon = show_favicon
+				fav_image = url_body(contentfavicon)
 
-			if fav_image.empty?
+				if fav_image.empty?
+					personal_favicon_binary = url_body("https://www.personal.com/favicon.ico")
+					return personal_favicon_binary
+					
+				else
+					return fav_image
+				end 
+			else
 				personal_favicon_binary = url_body("https://www.personal.com/favicon.ico")
 				return personal_favicon_binary
-				
-			else
-				return fav_image
-			end 
+			end
 							
 
 		end
@@ -247,6 +253,9 @@ class Favicon
 
 		    
 end
+
+#Favicon.favicon_image_binary("http://www.chalmers.se/en/Pages/default.aspx")
+Favicon.favicon_image_binary("no this is not a url at all")
 
 
 
