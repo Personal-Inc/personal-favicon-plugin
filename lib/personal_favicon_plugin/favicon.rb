@@ -114,7 +114,7 @@ class Favicon
 
 		private
 
-		def self.check_favicon
+		def self.check_favicon?
 		
 			begin 
 				value = true
@@ -164,13 +164,38 @@ class Favicon
 		end
 
 
+		# check if content of url page contains favicon string/name or not? before parsing it
+
+		def self.contain_favicon_string?
+
+			regxpic = /link rel\=.icon.*/
+		    regxpshic = /link rel\=.shortcut icon.*/
+
+			page_content = url_body(base_url)
+
+			if page_content.match(regxpic) || page_content.match(regxpshic)
+				return true
+			else
+				return false
+			end
+
+		end
+
+
+
+
 		# parsing and returning the content of index 
 
 		private
 
 		def self.parse_html
 
-			page_content = url_body(base_url)
+			if contain_favicon_string? == true
+				page_content = url_body(base_url)
+			else
+				page_content = url_body(@main_url)
+			end
+
 			
 			if page_content != nil
 
@@ -209,9 +234,11 @@ class Favicon
 
 		def self.get_favicon
 
-			if check_favicon == true
+
+			if check_favicon? == true
 				parse_html
 			else
+
 				base_favicon					
 			end
 
