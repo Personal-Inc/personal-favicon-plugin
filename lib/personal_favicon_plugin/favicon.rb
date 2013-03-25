@@ -254,8 +254,6 @@ class Favicon
 		    
 end
 
-#Favicon.favicon_image_binary("http://www.chalmers.se/en/Pages/default.aspx")
-Favicon.favicon_image_binary("no this is not a url at all")
 
 
 
