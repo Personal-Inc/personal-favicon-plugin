@@ -41,8 +41,10 @@ class Favicon
 		private
 
 		def self.connection(fara_url)
+
+			#:ssl => { :verify_mode => OpenSSL::SSL::VERIFY_NONE}
 			
-				conn_opt = {:url => fara_url, :ssl => { :verify_mode => OpenSSL::SSL::VERIFY_NONE},:max_redirects => 2}
+				conn_opt = {:url => fara_url,:max_redirects => 2}
 				conn = Faraday.new (conn_opt) do |faraday|
 					faraday.request :url_encoded
 					faraday.response :logger
