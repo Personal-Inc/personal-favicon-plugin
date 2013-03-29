@@ -106,7 +106,7 @@ class Favicon
 
 		def self.check_domain_availability?(url)
 			r = Whois.whois(url)
-			return r.available?
+			return r.registered?
 		end
 
 
