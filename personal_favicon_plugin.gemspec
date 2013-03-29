@@ -14,10 +14,12 @@ Gem::Specification.new do |s|
   s.description = "TODO: Retreiving favicon of a website"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
-  s.test_files = Dir["test/**/*"]
+  #s.test_files = Dir["test/**/*"]
+  s.test_files = Dir.glob("{spec,test}/**/*.rb")
 
   s.add_dependency "rails", "~> 3.2.12"
   s.add_dependency "faraday", "~> 0.8"  
+  s.add_development_dependency 'rspec','~> 2.5'
 
   s.add_development_dependency "sqlite3"
 end

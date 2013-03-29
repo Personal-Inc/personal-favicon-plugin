@@ -2,6 +2,7 @@ require 'net/http'
 require 'net/https'
 require 'uri'
 require 'faraday'
+require 'whois'
 
 class Favicon
 
@@ -24,11 +25,13 @@ class Favicon
 		def self.uri?(string)
 
   			uri = URI.parse(string)
+  			
   			%w( http https ).include?(uri.scheme)
+
 			rescue URI::BadURIError
-  				false
+  				return false
 			rescue URI::InvalidURIError
- 				false
+ 				return false
 
 		end
 
@@ -79,19 +82,7 @@ class Favicon
 				return "Got socket error: #{se}"
 			end
 
-		end
-		
-
-		# Get the response code for the favicon url
-
-		private
-
-		def self.response_code(img_url_respon)
-
-			code  = Integer(img_url_respon.status)
-			return code
-
-		end
+		end		
 
 
 		# retrieve favicon by appending favicon.ico and then retrieving
@@ -106,6 +97,16 @@ class Favicon
 				return base_url + "/favicon.ico"
 			end
 
+		end
+
+		# check the domain and its availability using
+		# WHOIS client and parser
+
+		private
+
+		def self.check_domain_availability?(url)
+			r = Whois.whois(url)
+			return r.available?
 		end
 
 
@@ -207,13 +208,13 @@ class Favicon
 
 
 				if slice_content != nil
-					sliced_content_split(slice_content)
+					return sliced_content_split(slice_content) 
 
 				elsif slice_content == nil
 					slice_content = page_content.slice(regxpshic)
 
 					if slice_content != nil
-						sliced_content_split(slice_content)
+						return sliced_content_split(slice_content)
 					else 
 						return nil
 					end
@@ -257,8 +258,11 @@ class Favicon
 		# processing the image
 
 		def self.favicon_image_binary(url)
+			
+			exp1 = url.split("www.")
+			exp2 = exp1[1].split("/")
 
-			if uri?("#{get(url)}") != false
+			if uri?("#{get(url)}") != false && check_domain_availability?("#{exp2[0]}")
 				contentfavicon = show_favicon
 				fav_image = url_body(contentfavicon)
 
@@ -278,11 +282,6 @@ class Favicon
 		end
 
 
-		    
 end
-
-
-
-
 
 
