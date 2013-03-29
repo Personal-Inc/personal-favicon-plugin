@@ -262,7 +262,7 @@ class Favicon
 			exp1 = url.split("www.")
 			exp2 = exp1[1].split("/")
 
-			if uri?("#{get(url)}") != false && check_domain_availability?("#{exp2[0]}")
+			if uri?("#{get(url)}") != false && check_domain_availability?("#{exp2[0]}") != false
 				contentfavicon = show_favicon
 				fav_image = url_body(contentfavicon)
 
