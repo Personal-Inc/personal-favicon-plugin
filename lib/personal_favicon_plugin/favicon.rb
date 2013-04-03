@@ -1,5 +1,3 @@
-#require 'net/http'
-#require 'net/https'
 require 'uri'
 require 'faraday'
 require 'whois'
@@ -30,8 +28,7 @@ class Favicon
 
 			begin
 
-	  			uri = URI.parse(string)
-	  			
+	  			uri = URI.parse(string)	  			
 	  			%w( http https ).include?(uri.scheme)
 
 			rescue URI::BadURIError || URI::InvalidURIError
@@ -45,14 +42,13 @@ class Favicon
 
 
 		def self.connection(fara_url)
-			#:ssl => { :verify_mode => OpenSSL::SSL::VERIFY_NONE}
-			#:max_redirects => 2
-				conn_opt = {:url => fara_url,:ssl => { :verify_mode => 0}}
-				Faraday.new(conn_opt) do |faraday|
-					faraday.request :url_encoded
-					faraday.response :logger
-					faraday.adapter Faraday.default_adapter
-				end
+
+			conn_opt = {:url => fara_url,:ssl => { :verify_mode => 0}}
+			Faraday.new(conn_opt) do |faraday|
+				faraday.request :url_encoded
+				faraday.response :logger
+				faraday.adapter Faraday.default_adapter
+			end
 			
 		end
 
@@ -202,31 +198,6 @@ class Favicon
 				return personal_favicon_binary
 			end
 
-			# if check_uri?("#{Favicon.get_url}")
-			# 	protocol_domain = url.split("www.")
-			# 	domain = protocol_domain[1].split("/")
-			# 	check_registration = Whois.whois("#{domain[0]}")
-			# else
-			# 	personal_favicon_binary = url_body("https://www.personal.com/favicon.ico")
-			# 	puts personal_favicon_binary
-			# end
-
-
-			# if check_registration.registered?
-			# 	contentfavicon = get_favicon
-			# 	fav_image = url_body(contentfavicon)
-
-			# 	if fav_image.empty?
-			# 		personal_favicon_binary = url_body("https://www.personal.com/favicon.ico")
-			# 		puts personal_favicon_binary
-					
-			# 	else
-			# 		puts fav_image
-			# 	end 
-			# else
-			# 	personal_favicon_binary = url_body("https://www.personal.com/favicon.ico")
-			# 	puts personal_favicon_binary
-			# end
 							
 
 		 end
@@ -234,6 +205,4 @@ class Favicon
 
 end
 
-#Favicon.set_url=("http://www.google.com/")
-#Favicon.parse_html
-#Favicon.favicon_image_binary("http://www.chalmers.se/sv/Sidor/default.aspx")	
+
