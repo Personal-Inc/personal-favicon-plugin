@@ -31,7 +31,7 @@ class Favicon
 	  			uri = URI.parse(string)	  			
 	  			%w( http https ).include?(uri.scheme)
 
-			rescue URI::BadURIError || URI::InvalidURIError
+			rescue StandardError
   				return false
   			end
 
@@ -197,12 +197,9 @@ class Favicon
 				personal_favicon_binary = url_body("https://www.personal.com/favicon.ico")
 				return personal_favicon_binary
 			end
-
 							
 
 		 end
 
 
 end
-
-
