@@ -4,6 +4,7 @@ PATH
     personal_favicon_plugin (1.0.0)
       faraday (~> 0.8)
       rails (~> 3.2.12)
+      whois
 
 GEM
   remote: http://rubygems.org/
@@ -52,7 +53,7 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mime-types (1.21)
+    mime-types (1.22)
     multi_json (1.7.2)
     multipart-post (1.2.0)
     polyglot (0.3.3)
@@ -101,6 +102,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.37)
+    whois (3.1.0)
 
 PLATFORMS
   ruby

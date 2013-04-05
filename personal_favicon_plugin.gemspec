@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email       = ["TODO: shayan@personal.com"]
   s.homepage    = "TODO"
   s.summary     = "TODO: PersonalFaviconPlugin."
-  s.description = "TODO: Retreiving favicon of a website"
+  s.description = "TODO: Retrieving favicon of a website"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir.glob("{spec,test}/**/*.rb")
