@@ -192,7 +192,7 @@ class Favicon
 				end
 
 				res = Dnsruby::Resolver.new
-				check_registration = res.query(protocol_domain)
+				res.query(protocol_domain)
 				res.close()
 
 
