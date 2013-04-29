@@ -1,6 +1,6 @@
 require 'faraday'
 require 'uri'
-require 'whois'
+require 'dnsruby'
 require 'personal_favicon_plugin/favicon'
 
 
