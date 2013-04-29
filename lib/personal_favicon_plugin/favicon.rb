@@ -1,6 +1,7 @@
 require 'uri'
 require 'faraday'
-require 'whois'
+require 'dnsruby'
+
 
 class Favicon
 
@@ -21,8 +22,6 @@ class Favicon
 		end
 
 		# check if the input is URI?
-
-		private 
 
 		def self.check_uri?(string)
 
@@ -180,11 +179,22 @@ class Favicon
 
 			begin 
 
-				protocol_domain = url.split("www.")
-				domain = protocol_domain[1].split("/")
-				check_registration = Whois.whois("#{domain[0]}")
+				parsed_url = URI.parse(url)
 
-				raise StandardError if check_registration.registered? != true
+				if(%w{http}.include?(parsed_url.scheme))
+				 	protocol_domain = url.split("http://")
+				 	protocol_domain = protocol_domain[1].chomp("/")
+				elsif(%w{https}.include?(parsed_url.scheme))
+				 	protocol_domain = url.split("https://")
+				 	protocol_domain = protocol_domain[1].chomp("/")
+				else
+				 	protocol_domain = url.chomp("/")
+				end
+
+				res = Dnsruby::Resolver.new
+				check_registration = res.query(protocol_domain)
+				res.close()
+
 
 				contentfavicon = get_favicon
 				fav_image = url_body(contentfavicon)
