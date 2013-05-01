@@ -177,24 +177,26 @@ class Favicon
 			
 			Favicon.set_url=(url) 
 
+
 			begin 
 
-				parsed_url = URI.parse(url)
+				parsed_url = URI.parse(base_url)
 
 				if(%w{http}.include?(parsed_url.scheme))
-				 	protocol_domain = url.split("http://")
+				 	protocol_domain = base_url.split("http://")
 				 	protocol_domain = protocol_domain[1].chomp("/")
 				elsif(%w{https}.include?(parsed_url.scheme))
-				 	protocol_domain = url.split("https://")
+				 	protocol_domain = base_url.split("https://")
 				 	protocol_domain = protocol_domain[1].chomp("/")
 				else
-				 	protocol_domain = url.chomp("/")
+				 	protocol_domain = base_url.chomp("/")
 				end
+
+				puts "protocol_domain is #{protocol_domain}"
 
 				res = Dnsruby::Resolver.new
 				res.query(protocol_domain)
 				res.close()
-
 
 				contentfavicon = get_favicon
 				fav_image = url_body(contentfavicon)
@@ -213,3 +215,5 @@ class Favicon
 
 
 end
+#Favicon.favicon_image_binary("http://www.chalmers.se/sv/Sidor/default.aspx")
+Favicon.favicon_image_binary("http://www.chalmers.se/sv/Sidor/default.aspx")
