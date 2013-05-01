@@ -192,8 +192,6 @@ class Favicon
 				 	protocol_domain = base_url.chomp("/")
 				end
 
-				puts "protocol_domain is #{protocol_domain}"
-
 				res = Dnsruby::Resolver.new
 				res.query(protocol_domain)
 				res.close()
@@ -215,5 +213,3 @@ class Favicon
 
 
 end
-#Favicon.favicon_image_binary("http://www.chalmers.se/sv/Sidor/default.aspx")
-Favicon.favicon_image_binary("http://www.chalmers.se/sv/Sidor/default.aspx")
