@@ -10,7 +10,7 @@ Add the plugin to you Gemfile:
 And install it:
 	bundle install
 
-Call the method with a url of website you want to obtain a favicon:(note: the url should consist of url scheme, e.g. http://www.example.com/)
+Call the method with a url of website you want to obtain a favicon:(note: the url should consist of url scheme, e.g. [http://www.example.com/])
 	Favicon.favicon_image_binary(url)
 
 == Version 1.0.0 - April 5, 2013
