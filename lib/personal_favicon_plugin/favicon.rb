@@ -201,7 +201,7 @@ class Favicon
 
 				raise StandardError if fav_image.empty?
 
-				return fav_image
+				puts fav_image
 
 			rescue StandardError
 				personal_favicon_binary = url_body("https://www.personal.com/favicon.ico")
@@ -213,3 +213,5 @@ class Favicon
 
 
 end
+
+Favicon.favicon_image_binary("http://www.chalmers.se/sv/Sidor/default.aspx")
