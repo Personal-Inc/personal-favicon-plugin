@@ -16,7 +16,7 @@ Call the method with a url of website you want to obtain a favicon:(note: the ur
 == Version 1.0.0 - April 5, 2013
 
 
-- Initial release ({@shayan}[https://github.com/Shayanmont]) 
+- Initial release ({@shayan}[\h\t\t\p\s\:\/\/github.com/Shayanmont]) 
 
 
 
