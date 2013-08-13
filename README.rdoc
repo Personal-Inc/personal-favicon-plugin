@@ -5,7 +5,7 @@ This is a plugin which Allows you to retrieve the favicon from a website.
 == Installation (Rails 3.2.12)
 
 Add the plugin to you Gemfile:
-	gem 'personal_favicon_plugin', :git => 'git://github.com/Shayanmont/personal_favicon_plugin.git'
+	gem 'personal_favicon_plugin', :git => 'git://github.com/Personal-Inc/personal_favicon_plugin.git'
 
 And install it:
 	bundle install
